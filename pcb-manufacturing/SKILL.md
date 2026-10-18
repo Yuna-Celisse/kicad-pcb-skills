@@ -1,6 +1,6 @@
 ---
 name: pcb-manufacturing
-description: KiCad 制造与出图：DFM 检查、板厂 profile、Gerber/钻孔/BOM/CPL 输出包、拼板、装配与测试、投板 EQ。触发：出图、Gerber、钻孔、BOM、CPL、拼板、V-cut、DFM、投板、板厂、钢网、阻抗测试。English: manufacturing, Gerber, drill, BOM, CPL, panelization, DFM, fab.
+description: "KiCad 制造与出图：DFM 检查、板厂 profile、Gerber/钻孔/BOM/CPL 输出包、拼板、装配与测试、投板 EQ。触发：出图、Gerber、钻孔、BOM、CPL、拼板、V-cut、DFM、投板、板厂、钢网、阻抗测试。English: manufacturing, Gerber, drill, BOM, CPL, panelization, DFM, fab."
 metadata: { version: 0.3, requires: "konnect>=0.13, kicad>=10" }
 ---
 

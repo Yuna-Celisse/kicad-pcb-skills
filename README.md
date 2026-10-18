@@ -45,6 +45,25 @@ powershell -ExecutionPolicy Bypass -File .\mount-skills.ps1 -Apply
 PowerShell 7 可用 `pwsh -File .\mount-skills.ps1`。脚本只创建 junction，不复制文件；
 已存在且指向本仓库的链接会跳过，其他内容拒绝覆盖。
 
+### 在 DeepSeek Harness 中启用 MCP
+
+在 profile 的 `cordis.patch.yml` 追加（路径按本机替换）：
+
+```yaml
+- insert:
+    - id: pcb-toolkit
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: pcb-toolkit
+        transport: stdio
+        command: '<python.exe 绝对路径>'
+        args:
+          - '<skills>/pcb-toolkit/scripts/pcb_mcp.py'
+```
+
+重载 profile 或重启 Harness 后，工具列表出现 `pcb_trace_width` 等 8 个 `pcb_*` 工具；
+新会话的技能目录出现 `pcb-flow` 等 7 个技能。
+
 ## 测试
 
 ```powershell

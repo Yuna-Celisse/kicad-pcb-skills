@@ -1,6 +1,6 @@
 ---
 name: pcb-routing
-description: KiCad 布线经验与规则：netclass、载流线宽、过孔、阻抗、差分/等长、回流路径、串扰、铺铜与可制造性。触发：布线、走线、线宽、过孔、阻抗、差分、等长、铺铜、netclass、载流、回流。English: routing, trace width, via, impedance, differential pair, length matching, copper pour.
+description: "KiCad 布线经验与规则：netclass、载流线宽、过孔、阻抗、差分/等长、回流路径、串扰、铺铜与可制造性。触发：布线、走线、线宽、过孔、阻抗、差分、等长、铺铜、netclass、载流、回流。English: routing, trace width, via, impedance, differential pair, length matching, copper pour."
 metadata: { version: 0.3, requires: "konnect>=0.13, kicad>=10" }
 ---
 

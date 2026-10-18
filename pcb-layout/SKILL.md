@@ -1,6 +1,6 @@
 ---
 name: pcb-layout
-description: KiCad PCB 布局与叠层：功能分区、连接器/去耦/晶振/DCDC 摆放、热与机械禁布、2/4/6 层叠层、布局评审。触发：布局、摆放、板框、安装孔、叠层、阻抗目标、去耦、晶振、散热。English: PCB layout, placement, floorplan, stackup, keepout.
+description: "KiCad PCB 布局与叠层：功能分区、连接器/去耦/晶振/DCDC 摆放、热与机械禁布、2/4/6 层叠层、布局评审。触发：布局、摆放、板框、安装孔、叠层、阻抗目标、去耦、晶振、散热。English: PCB layout, placement, floorplan, stackup, keepout."
 metadata: { version: 0.3, requires: "konnect>=0.13, kicad>=10" }
 ---
 

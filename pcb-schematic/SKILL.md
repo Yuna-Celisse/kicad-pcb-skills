@@ -1,6 +1,6 @@
 ---
 name: pcb-schematic
-description: KiCad 原理图绘制：图面规范、命名与层次、块级电路、ERC 裁决、可测试性、图面重叠检查。触发：画原理图、加器件、连线、命名网络、层次页、ERC 报错、原理图评审。English: schematic, wire, net label, hierarchical sheet, ERC.
+description: "KiCad 原理图绘制：图面规范、命名与层次、块级电路、ERC 裁决、可测试性、图面重叠检查。触发：画原理图、加器件、连线、命名网络、层次页、ERC 报错、原理图评审。English: schematic, wire, net label, hierarchical sheet, ERC."
 metadata: { version: 0.3, requires: "konnect>=0.13, kicad>=10" }
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: pcb-flow
-description: KiCad PCB 全流程总控：建立/冻结 Design Intent、维护假设登记、按 P0–P10 推进、用 gate.py 判定 PASS/BLOCKED/INCOMPLETE 并决定能否投板。触发：开始新板、继续项目、下一步做什么、能不能投板、冻结约束、生成规则、签核。English: PCB flow, stage gate, sign-off, design intent.
+description: "KiCad PCB 全流程总控：建立/冻结 Design Intent、维护假设登记、按 P0–P10 推进、用 gate.py 判定 PASS/BLOCKED/INCOMPLETE 并决定能否投板。触发：开始新板、继续项目、下一步做什么、能不能投板、冻结约束、生成规则、签核。English: PCB flow, stage gate, sign-off, design intent."
 metadata: { version: 0.3, requires: "konnect>=0.13, kicad>=10" }
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: pcb-verification
-description: KiCad 验证全流程：采集 DRC/ERC/overlap/lint/gen 报告，调用 gate.py 得到五态结论，管理 waiver 与报告归档。触发：DRC、ERC、重叠、规则 lint、能不能投板、验证报告、违规怎么修。English: DRC, ERC, design rule check, verification, sign-off report.
+description: "KiCad 验证全流程：采集 DRC/ERC/overlap/lint/gen 报告，调用 gate.py 得到五态结论，管理 waiver 与报告归档。触发：DRC、ERC、重叠、规则 lint、能不能投板、验证报告、违规怎么修。English: DRC, ERC, design rule check, verification, sign-off report."
 metadata: { version: 0.3, requires: "konnect>=0.13, kicad>=10" }
 ---
 

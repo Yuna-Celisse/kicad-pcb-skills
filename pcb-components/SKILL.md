@@ -1,6 +1,6 @@
 ---
 name: pcb-components
-description: KiCad 器件选型与 BOM 健康：降额、无源/有源选择、封装装配、供货与生命周期、替代料。触发：选型、选电阻电容、降额、BOM 审查、替代料、停产、JLC 基础库、封装选择。English: component selection, derating, BOM, sourcing, alternate parts.
+description: "KiCad 器件选型与 BOM 健康：降额、无源/有源选择、封装装配、供货与生命周期、替代料。触发：选型、选电阻电容、降额、BOM 审查、替代料、停产、JLC 基础库、封装选择。English: component selection, derating, BOM, sourcing, alternate parts."
 metadata: { version: 0.3, requires: "konnect>=0.13, kicad>=10" }
 ---
 
