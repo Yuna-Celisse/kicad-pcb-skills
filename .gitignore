@@ -1,0 +1,19 @@
+# 临时产物
+pcb-toolkit/out/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 测试用 vendored 依赖（可选安装 jsonschema，见 requirements-dev.txt）
+pcb-toolkit/tests/vendor/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

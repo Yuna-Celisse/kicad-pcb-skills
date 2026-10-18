@@ -1,0 +1,35 @@
+{
+  "name": "exact_value_and_range",
+  "note": "exact 同时给 value 与 range：两者都应拒绝",
+  "expect": {"schema": false, "codes": ["E019"]},
+  "intent": {
+    "schema_version": 1,
+    "project_id": "case-exact-both",
+    "revision": 1,
+    "units": {"length": "mm", "voltage": "V", "current": "A",
+              "impedance": "ohm", "frequency": "Hz", "temperature": "C"},
+    "sources": {"S-002": {"type": "datasheet", "ref": "USB2-PHY"}},
+    "requirements": {
+      "usb_diff_impedance": {
+        "domain": "signal_integrity",
+        "direction": "exact",
+        "level": "MUST",
+        "waiver_policy": "prohibited",
+        "candidates": [
+          {"id": "C-001", "value": 90, "range": {"min": 80, "max": 100},
+           "authority": "DATASHEET", "level": "MUST", "source": "S-002"}
+        ]
+      }
+    },
+    "assumptions": {},
+    "derived": {
+      "constraints": {
+        "usb_diff_impedance": {"status": "adopted", "range": {"min": 80, "max": 100},
+                               "basis": ["C-001"], "overridden": []}
+      },
+      "netclasses": {},
+      "rule_requirements": {},
+      "verification_requirements": {}
+    }
+  }
+}

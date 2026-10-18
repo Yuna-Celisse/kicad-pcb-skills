@@ -1,0 +1,35 @@
+{
+  "name": "equal_string",
+  "note": "equal 方向接受字符串（引脚映射），schema 与 validator 都应通过",
+  "expect": {"schema": true, "codes": []},
+  "intent": {
+    "schema_version": 1,
+    "project_id": "case-equal-string",
+    "revision": 1,
+    "units": {"length": "mm", "voltage": "V", "current": "A",
+              "impedance": "ohm", "frequency": "Hz", "temperature": "C"},
+    "sources": {"S-002": {"type": "datasheet", "ref": "MCU-pinout"}},
+    "requirements": {
+      "uart_tx_pin": {
+        "domain": "component",
+        "direction": "equal",
+        "level": "MUST",
+        "waiver_policy": "prohibited",
+        "candidates": [
+          {"id": "C-001", "value": "PA9", "authority": "DATASHEET",
+           "level": "MUST", "source": "S-002"}
+        ]
+      }
+    },
+    "assumptions": {},
+    "derived": {
+      "constraints": {
+        "uart_tx_pin": {"status": "adopted", "value": "PA9",
+                        "basis": ["C-001"], "overridden": []}
+      },
+      "netclasses": {},
+      "rule_requirements": {},
+      "verification_requirements": {}
+    }
+  }
+}

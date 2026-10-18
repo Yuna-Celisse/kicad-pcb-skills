@@ -1,0 +1,43 @@
+{
+  "name": "conflict_with_value",
+  "note": "status=conflict 却带 value：schema 与 validator 都应拒绝",
+  "expect": {"schema": false, "codes": ["E014"]},
+  "intent": {
+    "schema_version": 1,
+    "project_id": "case-conflict-value",
+    "revision": 1,
+    "units": {"length": "mm", "voltage": "V", "current": "A",
+              "impedance": "ohm", "frequency": "Hz", "temperature": "C"},
+    "sources": {
+      "S-001": {"type": "fab_profile", "ref": "JLC-4L", "retrieved": "2026-10-01"},
+      "S-003": {"type": "project_constraint", "ref": "design-brief"}
+    },
+    "requirements": {
+      "min_clearance": {
+        "domain": "manufacturing",
+        "direction": "at_least",
+        "level": "MUST",
+        "waiver_policy": "authority_required",
+        "candidates": [
+          {"id": "C-001", "value": 0.15, "authority": "FAB", "level": "MUST", "source": "S-001"},
+          {"id": "C-002", "value": 0.10, "authority": "PROJECT", "level": "SHOULD", "source": "S-003"}
+        ]
+      }
+    },
+    "assumptions": {},
+    "derived": {
+      "constraints": {
+        "min_clearance": {
+          "status": "conflict",
+          "value": 0.15,
+          "conflict": {"code": "project_loosen_hard_bound",
+                       "hard": ["C-001"], "project": ["C-002"],
+                       "waiver_policy": "authority_required"}
+        }
+      },
+      "netclasses": {},
+      "rule_requirements": {},
+      "verification_requirements": {}
+    }
+  }
+}

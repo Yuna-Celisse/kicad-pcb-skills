@@ -1,0 +1,6 @@
+(version 1)
+(future_top (thing 1))
+(rule "mixed"
+  (constraint brand_new_constraint (min 1mm))
+  (weird_child (nested 2))
+  (condition "A.NetClass == 'X'"))

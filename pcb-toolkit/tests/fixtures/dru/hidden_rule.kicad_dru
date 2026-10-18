@@ -1,0 +1,2 @@
+(version 1)
+(future (rule "hidden" (constraint clearance (min 1mm))))

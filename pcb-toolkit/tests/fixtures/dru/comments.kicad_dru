@@ -1,0 +1,7 @@
+# leading comment
+(version 1)   # inline comment
+
+# between
+(rule "demo"
+  # inside
+  (constraint clearance (min 0.2mm)))  # tail

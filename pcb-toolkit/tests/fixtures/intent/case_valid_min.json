@@ -1,0 +1,34 @@
+{
+  "name": "valid_min",
+  "note": "最小合法骨架：一条 FAB at_least 约束",
+  "expect": {"schema": true, "codes": []},
+  "intent": {
+    "schema_version": 1,
+    "project_id": "case-valid",
+    "revision": 1,
+    "units": {"length": "mm", "voltage": "V", "current": "A",
+              "impedance": "ohm", "frequency": "Hz", "temperature": "C"},
+    "sources": {"S-001": {"type": "fab_profile", "ref": "JLC-4L", "retrieved": "2026-10-01"}},
+    "requirements": {
+      "min_clearance": {
+        "domain": "manufacturing",
+        "direction": "at_least",
+        "level": "MUST",
+        "waiver_policy": "authority_required",
+        "candidates": [
+          {"id": "C-001", "value": 0.15, "authority": "FAB", "level": "MUST", "source": "S-001"}
+        ]
+      }
+    },
+    "assumptions": {},
+    "derived": {
+      "constraints": {
+        "min_clearance": {"status": "adopted", "value": 0.15,
+                          "basis": ["C-001"], "overridden": []}
+      },
+      "netclasses": {},
+      "rule_requirements": {},
+      "verification_requirements": {}
+    }
+  }
+}

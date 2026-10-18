@@ -1,0 +1,35 @@
+{
+  "name": "large_int_equal",
+  "note": "Schema 只能看出是 number；>2^53 的整数是否相等只有 validator 能判",
+  "expect": {"schema": true, "codes": ["E018"]},
+  "intent": {
+    "schema_version": 1,
+    "project_id": "case-large-int",
+    "revision": 1,
+    "units": {"length": "mm", "voltage": "V", "current": "A",
+              "impedance": "ohm", "frequency": "Hz", "temperature": "C"},
+    "sources": {"S-002": {"type": "datasheet", "ref": "PIN-MAP"}},
+    "requirements": {
+      "pin_map": {
+        "domain": "component",
+        "direction": "equal",
+        "level": "MUST",
+        "waiver_policy": "prohibited",
+        "candidates": [
+          {"id": "C-001", "value": 9007199254740992, "authority": "DATASHEET",
+           "level": "MUST", "source": "S-002"}
+        ]
+      }
+    },
+    "assumptions": {},
+    "derived": {
+      "constraints": {
+        "pin_map": {"status": "adopted", "value": 9007199254740993,
+                    "basis": ["C-001"], "overridden": []}
+      },
+      "netclasses": {},
+      "rule_requirements": {},
+      "verification_requirements": {}
+    }
+  }
+}

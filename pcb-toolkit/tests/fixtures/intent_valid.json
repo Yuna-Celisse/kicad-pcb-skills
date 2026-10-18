@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "project_id": "jxbadge",
+  "revision": 4,
+  "units": {
+    "length": "mm",
+    "voltage": "V",
+    "current": "A",
+    "impedance": "ohm",
+    "frequency": "Hz",
+    "temperature": "C"
+  },
+  "sources": {
+    "S-001": {"type": "fab_profile", "ref": "JLCPCB-4L-2026-10", "retrieved": "2026-10-01"},
+    "S-002": {"type": "datasheet", "ref": "ESP32-S3_datasheet_p47"}
+  },
+  "requirements": {
+    "min_clearance": {
+      "domain": "manufacturing",
+      "direction": "at_least",
+      "level": "MUST",
+      "waiver_policy": "authority_required",
+      "candidates": [
+        {"id": "C-001", "value": 0.15, "authority": "FAB", "level": "MUST", "source": "S-001"}
+      ]
+    },
+    "usb_diff_impedance": {
+      "domain": "signal_integrity",
+      "direction": "exact",
+      "level": "MUST",
+      "waiver_policy": "prohibited",
+      "candidates": [
+        {"id": "C-001", "value": 90, "tolerance_pct": 10,
+         "authority": "DATASHEET", "level": "MUST", "source": "S-002"}
+      ]
+    },
+    "antenna_keepout": {
+      "domain": "project",
+      "direction": "at_least",
+      "level": "SHOULD",
+      "waiver_policy": "project_acceptance",
+      "assumptions": ["A-017"],
+      "candidates": []
+    }
+  },
+  "assumptions": {
+    "A-017": {
+      "item": "antenna_keepout",
+      "assumed_value": {"value": 5, "unit": "mm"},
+      "impact": ["floorplan", "rf_clearance"],
+      "confidence": "low",
+      "must_resolve_before": "P3",
+      "status": "active"
+    }
+  },
+  "derived": {
+    "constraints": {
+      "min_clearance": {
+        "status": "adopted",
+        "value": 0.15,
+        "basis": ["C-001"],
+        "overridden": []
+      },
+      "usb_diff_impedance": {
+        "status": "adopted",
+        "range": {"min": 81, "max": 99},
+        "basis": ["C-001"],
+        "overridden": []
+      },
+      "antenna_keepout": {
+        "status": "unresolved",
+        "reason": "no_candidate"
+      }
+    },
+    "netclasses": {},
+    "rule_requirements": {},
+    "verification_requirements": {}
+  }
+}

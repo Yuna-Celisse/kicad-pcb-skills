@@ -1,0 +1,40 @@
+{
+  "name": "impact_non_string",
+  "note": "impact 含数字：schema 与 validator 都应拒绝",
+  "expect": {"schema": false, "codes": ["E016"]},
+  "intent": {
+    "schema_version": 1,
+    "project_id": "case-impact-number",
+    "revision": 1,
+    "units": {"length": "mm", "voltage": "V", "current": "A",
+              "impedance": "ohm", "frequency": "Hz", "temperature": "C"},
+    "sources": {"S-001": {"type": "fab_profile", "ref": "JLC-4L", "retrieved": "2026-10-01"}},
+    "requirements": {
+      "antenna_keepout": {
+        "domain": "project",
+        "direction": "at_least",
+        "level": "SHOULD",
+        "waiver_policy": "project_acceptance",
+        "assumptions": ["A-001"],
+        "candidates": []
+      }
+    },
+    "assumptions": {
+      "A-001": {
+        "item": "antenna_keepout",
+        "assumed_value": {"value": 5, "unit": "mm"},
+        "impact": [123],
+        "must_resolve_before": "P3",
+        "status": "active"
+      }
+    },
+    "derived": {
+      "constraints": {
+        "antenna_keepout": {"status": "unresolved", "reason": "no_candidate"}
+      },
+      "netclasses": {},
+      "rule_requirements": {},
+      "verification_requirements": {}
+    }
+  }
+}

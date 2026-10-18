@@ -1,0 +1,2 @@
+# 可选开发依赖：启用 JSON Schema 校验测试（test_intent_schema / fab profile）。
+jsonschema>=4.20

@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:pcb-skills:design-intent:1",
+  "title": "KiCad Design Intent",
+  "description": "Structural contract for Design Intent. Cross-reference, arithmetic and resolver semantics are enforced by validate_intent.py, not here.",
+  "type": "object",
+  "required": ["schema_version", "project_id", "revision", "units", "sources",
+               "requirements", "assumptions", "derived"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "revision": {"type": "integer", "minimum": 1},
+    "units": {"$ref": "#/$defs/units"},
+    "sources": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/source"}
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/requirement"}
+    },
+    "assumptions": {
+      "type": "object",
+      "propertyNames": {"pattern": "^A-[0-9]{3}$"},
+      "additionalProperties": {"$ref": "#/$defs/assumption"}
+    },
+    "derived": {"$ref": "#/$defs/derived"}
+  },
+  "$defs": {
+    "units": {
+      "type": "object",
+      "required": ["length", "voltage", "current", "impedance", "frequency", "temperature"],
+      "properties": {
+        "length": {"const": "mm"},
+        "voltage": {"const": "V"},
+        "current": {"const": "A"},
+        "impedance": {"const": "ohm"},
+        "frequency": {"const": "Hz"},
+        "temperature": {"const": "C"},
+        "power": {"const": "W"},
+        "time": {"const": "s"},
+        "capacitance": {"const": "F"},
+        "inductance": {"const": "H"},
+        "angle": {"const": "deg"},
+        "ratio": {"const": "pct"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["type", "ref"],
+      "properties": {
+        "type": {"enum": ["calculation", "datasheet", "standard", "fab_profile",
+                          "project_constraint", "heuristic"]},
+        "ref": {"type": "string", "minLength": 1},
+        "retrieved": {"type": "string", "minLength": 1}
+      }
+    },
+    "range": {
+      "type": "object",
+      "required": ["min", "max"],
+      "properties": {
+        "min": {"type": "number"},
+        "max": {"type": "number"}
+      }
+    },
+    "candidate_base": {
+      "type": "object",
+      "required": ["id", "authority", "level", "source"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "authority": {"enum": ["PROJECT", "DATASHEET", "STANDARD", "FAB", "DOMAIN", "GENERIC"]},
+        "level": {"enum": ["MUST", "SHOULD", "HEURISTIC", "INFO"]},
+        "source": {"type": "string", "minLength": 1}
+      }
+    },
+    "cand_numeric": {
+      "allOf": [
+        {"$ref": "#/$defs/candidate_base"},
+        {
+          "type": "object",
+          "required": ["value"],
+          "properties": {"value": {"type": "number"}},
+          "not": {"anyOf": [{"required": ["range"]}, {"required": ["tolerance_pct"]}]}
+        }
+      ]
+    },
+    "cand_exact_value": {
+      "allOf": [
+        {"$ref": "#/$defs/candidate_base"},
+        {
+          "type": "object",
+          "required": ["value"],
+          "properties": {
+            "value": {"type": "number"},
+            "tolerance_pct": {"type": "number", "minimum": 0}
+          },
+          "not": {"required": ["range"]}
+        }
+      ]
+    },
+    "cand_exact_range": {
+      "allOf": [
+        {"$ref": "#/$defs/candidate_base"},
+        {
+          "type": "object",
+          "required": ["range"],
+          "properties": {"range": {"$ref": "#/$defs/range"}},
+          "not": {"anyOf": [{"required": ["tolerance_pct"]}, {"required": ["value"]}]}
+        }
+      ]
+    },
+    "cand_equal": {
+      "allOf": [
+        {"$ref": "#/$defs/candidate_base"},
+        {
+          "type": "object",
+          "required": ["value"],
+          "properties": {"value": {"type": ["string", "number"]}},
+          "not": {"anyOf": [{"required": ["range"]}, {"required": ["tolerance_pct"]}]}
+        }
+      ]
+    },
+    "requirement_common": {
+      "type": "object",
+      "required": ["domain", "direction", "level", "waiver_policy", "candidates"],
+      "properties": {
+        "domain": {"enum": ["safety", "manufacturing", "component",
+                            "signal_integrity", "project", "practice"]},
+        "level": {"enum": ["MUST", "SHOULD", "HEURISTIC", "INFO"]},
+        "waiver_policy": {"enum": ["prohibited", "authority_required", "project_acceptance"]},
+        "assumptions": {"type": "array", "items": {"type": "string"}},
+        "candidates": {"type": "array"}
+      }
+    },
+    "req_at_least": {
+      "allOf": [
+        {"$ref": "#/$defs/requirement_common"},
+        {
+          "properties": {
+            "direction": {"const": "at_least"},
+            "candidates": {"type": "array", "items": {"$ref": "#/$defs/cand_numeric"}}
+          },
+          "required": ["direction"]
+        }
+      ]
+    },
+    "req_at_most": {
+      "allOf": [
+        {"$ref": "#/$defs/requirement_common"},
+        {
+          "properties": {
+            "direction": {"const": "at_most"},
+            "candidates": {"type": "array", "items": {"$ref": "#/$defs/cand_numeric"}}
+          },
+          "required": ["direction"]
+        }
+      ]
+    },
+    "req_exact": {
+      "allOf": [
+        {"$ref": "#/$defs/requirement_common"},
+        {
+          "properties": {
+            "direction": {"const": "exact"},
+            "candidates": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {"$ref": "#/$defs/cand_exact_value"},
+                  {"$ref": "#/$defs/cand_exact_range"}
+                ]
+              }
+            }
+          },
+          "required": ["direction"]
+        }
+      ]
+    },
+    "req_equal": {
+      "allOf": [
+        {"$ref": "#/$defs/requirement_common"},
+        {
+          "properties": {
+            "direction": {"const": "equal"},
+            "candidates": {"type": "array", "items": {"$ref": "#/$defs/cand_equal"}}
+          },
+          "required": ["direction"]
+        }
+      ]
+    },
+    "requirement": {
+      "oneOf": [
+        {"$ref": "#/$defs/req_at_least"},
+        {"$ref": "#/$defs/req_at_most"},
+        {"$ref": "#/$defs/req_exact"},
+        {"$ref": "#/$defs/req_equal"}
+      ]
+    },
+    "assumption": {
+      "type": "object",
+      "required": ["item", "assumed_value", "impact", "must_resolve_before", "status"],
+      "properties": {
+        "item": {"type": "string", "minLength": 1},
+        "assumed_value": {
+          "type": "object",
+          "required": ["value", "unit"],
+          "properties": {
+            "value": {"type": ["number", "string"]},
+            "unit": {"type": "string", "minLength": 1}
+          }
+        },
+        "impact": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "must_resolve_before": {
+          "enum": ["P0", "P1", "P2", "P3", "P4", "P5",
+                   "P6", "P7", "P8", "P9", "P10"]
+        },
+        "status": {"enum": ["proposed", "active", "resolved", "refuted", "expired"]},
+        "owner": {"type": "string"},
+        "confidence": {"type": "string"}
+      }
+    },
+    "result_adopted": {
+      "allOf": [
+        {
+          "type": "object",
+          "required": ["status", "basis"],
+          "properties": {
+            "status": {"const": "adopted"},
+            "basis": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "overridden": {"type": "array", "items": {"type": "string"}},
+            "value": {"type": ["number", "string"]},
+            "range": {"$ref": "#/$defs/range"},
+            "level": {"enum": ["MUST", "SHOULD", "HEURISTIC", "INFO"]}
+          },
+          "not": {"required": ["conflict"]}
+        },
+        {
+          "oneOf": [
+            {"required": ["value"], "not": {"required": ["range"]}},
+            {"required": ["range"], "not": {"required": ["value"]}}
+          ]
+        }
+      ]
+    },
+    "result_conflict": {
+      "type": "object",
+      "required": ["status", "conflict"],
+      "properties": {
+        "status": {"const": "conflict"},
+        "conflict": {
+          "type": "object",
+          "required": ["code"],
+          "properties": {
+            "code": {"type": "string", "minLength": 1},
+            "hard": {"type": "array", "items": {"type": "string"}},
+            "project": {"type": "array", "items": {"type": "string"}},
+            "waiver_policy": {"enum": ["prohibited", "authority_required", "project_acceptance"]}
+          }
+        }
+      },
+      "not": {"anyOf": [{"required": ["value"]}, {"required": ["range"]}]}
+    },
+    "result_unresolved": {
+      "type": "object",
+      "required": ["status", "reason"],
+      "properties": {
+        "status": {"const": "unresolved"},
+        "reason": {"type": "string", "minLength": 1}
+      },
+      "not": {"anyOf": [{"required": ["value"]}, {"required": ["range"]},
+                        {"required": ["conflict"]}]}
+    },
+    "derived_result": {
+      "oneOf": [
+        {"$ref": "#/$defs/result_adopted"},
+        {"$ref": "#/$defs/result_conflict"},
+        {"$ref": "#/$defs/result_unresolved"}
+      ]
+    },
+    "derived": {
+      "type": "object",
+      "required": ["constraints"],
+      "properties": {
+        "constraints": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/derived_result"}
+        },
+        "netclasses": {"type": "object"},
+        "rule_requirements": {"type": "object"},
+        "verification_requirements": {"type": "object"}
+      }
+    }
+  }
+}

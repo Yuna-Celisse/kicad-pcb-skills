@@ -1,0 +1,35 @@
+{
+  "name": "at_least_with_range",
+  "note": "at_least 的 candidate 只给 range：schema 与 validator 都应拒绝",
+  "expect": {"schema": false, "codes": ["E019"]},
+  "intent": {
+    "schema_version": 1,
+    "project_id": "case-at-least-range",
+    "revision": 1,
+    "units": {"length": "mm", "voltage": "V", "current": "A",
+              "impedance": "ohm", "frequency": "Hz", "temperature": "C"},
+    "sources": {"S-001": {"type": "fab_profile", "ref": "JLC-4L", "retrieved": "2026-10-01"}},
+    "requirements": {
+      "min_clearance": {
+        "domain": "manufacturing",
+        "direction": "at_least",
+        "level": "MUST",
+        "waiver_policy": "authority_required",
+        "candidates": [
+          {"id": "C-001", "range": {"min": 0.1, "max": 0.2},
+           "authority": "FAB", "level": "MUST", "source": "S-001"}
+        ]
+      }
+    },
+    "assumptions": {},
+    "derived": {
+      "constraints": {
+        "min_clearance": {"status": "adopted", "value": 0.15,
+                          "basis": ["C-001"], "overridden": []}
+      },
+      "netclasses": {},
+      "rule_requirements": {},
+      "verification_requirements": {}
+    }
+  }
+}

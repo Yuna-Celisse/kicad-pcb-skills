@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "note": "起点预设，不是板厂承诺；按叠层/协议调整后写入项目规则。",
+  "classes": [
+    {"name": "Default", "width_mm": 0.20, "clearance_mm": 0.20,
+     "via_mm": [0.60, 0.30], "use": "普通信号"},
+    {"name": "Power", "width_mm": 0.50, "clearance_mm": 0.20,
+     "via_mm": [0.80, 0.40], "use": "电源，按载流加宽/多孔"},
+    {"name": "HS", "width_mm": 0.25, "clearance_mm": 0.25,
+     "via_mm": [0.60, 0.30], "impedance_ohm": 50, "use": "高速单端"},
+    {"name": "Diff90", "width_mm": 0.20, "gap_mm": 0.15,
+     "clearance_mm": 0.20, "via_mm": [0.60, 0.30],
+     "diff_impedance_ohm": 90, "use": "USB 2.0"},
+    {"name": "Diff100", "width_mm": 0.18, "gap_mm": 0.18,
+     "clearance_mm": 0.20, "via_mm": [0.60, 0.30],
+     "diff_impedance_ohm": 100, "use": "以太网"},
+    {"name": "Analog", "width_mm": 0.20, "clearance_mm": 0.25,
+     "via_mm": [0.60, 0.30], "use": "模拟/敏感"}
+  ]
+}
